@@ -18,7 +18,6 @@ function searchComics(title) {
   )
     .then((response) => response.json())
     .then((parsedResponse) => {
-      console.log(parsedResponse);
       parsedResponse.data.results.forEach((element) => {
         const hqId = element.id;
         const srcImage =
@@ -88,15 +87,26 @@ function createModal(id) {
       const modalTitle = document.createElement("h1");
       const modalSeries = document.createElement("h2");
       const modalDescription = document.createElement("p");
+      const descriptions = document.createElement("div")
+      const modalImg = document.createElement("img")
+      const cartButton = document.createElement("button");
+      const cartIcon = document.createElement("img");
 
+      cartButton.classList.add("detailsCardButton");
       modalContent.classList.add("modalContent");
+      cartIcon.src = "./assets/cart-icon.svg";
+  cartButton.innerText = "Add to Cart";
       modalTitle.innerText = parsedResponse.data.results[0].title;
       modalSeries.innerText = parsedResponse.data.results[0].series.name;
       modalDescription.innerHTML = parsedResponse.data.results[0].description;
+      modalImg.src = parsedResponse.data.results[0].thumbnail.path + "." + parsedResponse.data.results[0].thumbnail.extension;
 
-      modalContent.appendChild(modalTitle);
-      modalContent.appendChild(modalSeries);
-      modalContent.appendChild(modalDescription);
+      cartButton.appendChild(cartIcon);
+      descriptions.appendChild(modalTitle);
+      descriptions.appendChild(modalSeries);
+      descriptions.appendChild(modalDescription);
+      modalContent.appendChild(modalImg);
+      modalContent.appendChild(descriptions);
       detailsModal.appendChild(modalContent);
 
       if (creators.length) {
@@ -110,9 +120,17 @@ function createModal(id) {
           creatorsList.appendChild(creatorItem);
         });
 
-        modalContent.appendChild(creatorsTitle);
-        modalContent.appendChild(creatorsList);
+        descriptions.appendChild(creatorsTitle);
+        descriptions.appendChild(creatorsList);
+
+        cartButton.addEventListener("click", () => {
+            createCartItem(modalImg.src, modalTitle.innerText);
+            cartItemsCounter++;
+            updateCounter();
+          });
       }
+
+      descriptions.appendChild(cartButton);
     });
 }
 
