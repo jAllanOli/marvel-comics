@@ -42,7 +42,27 @@
 
     <div class="comicModal"></div>
 
-    <div class="cart">
+    <div class="cartModal">
+        <div class="cartContent">
+            <div class="cartOrders">
+                <header>
+                    <h1>Cart</h1>
+                    <button id="minimizeButton">
+                        <img src="./assets/minimize-icon.svg" alt="minimize">
+                    </button>
+                </header>
+                <div class="cartItems"></div>
+                <footer>
+                    <button id="toDelivery">Prosseguir para entrega</button>
+                </footer>
+            </div>
+            <div class="addressPicking">
+            </div>
+        </div>
+    </div>
+
+    <div class="cart" id="openCart">
+        <p class="itemsCounter">0</p>
       <img src="./assets/cart-icon.svg" alt="">
     </div>
     
