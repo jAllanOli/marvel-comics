@@ -16,7 +16,6 @@ const finalStage = document.querySelector(".finalArea");
 const openDeliveryButton = document.querySelector("#toDelivery");
 const returnButton = document.querySelector("#returnButton");
 const finishButton = document.querySelector("#finishButton");
-let cartItemsCounter = 0;
 let cartItemsKeeper = [];
 
 function searchComics(title) {
@@ -190,7 +189,6 @@ function updateCounter() {
 
 function removeCartItem(item) {
   cartItemsContainer.removeChild(item);
-  cartItemsCounter--;
   updateCounter();
 }
 
