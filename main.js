@@ -13,7 +13,9 @@ const counterContainer = document.querySelector(".itemsCounter");
 const ordersStage = document.querySelector(".cartOrders");
 const deliveryStage = document.querySelector(".addressPicking");
 const openDeliveryButton = document.querySelector("#toDelivery");
+const returnButton = document.querySelector("#returnButton")
 let cartItemsCounter = 0;
+let cartItemsKeeper = [];
 
 function searchComics(title) {
   fetch(
@@ -61,7 +63,7 @@ function createDivComic(srcImage, title, id, destiny) {
   });
 
   cartButton.addEventListener("click", () => {
-    createCartItem(srcImage, title);
+    createCartItem(srcImage, title, id);
     cartItemsCounter++;
     updateCounter();
   });
@@ -115,6 +117,16 @@ function createModal(id) {
       modalContent.appendChild(descriptions);
       detailsModal.appendChild(modalContent);
 
+      
+
+      cartButton.addEventListener("click", () => {
+        createCartItem(modalImg.src, modalTitle.innerText, id);
+        cartItemsCounter++;
+        updateCounter();
+      });
+
+      descriptions.appendChild(cartButton);
+
       if (creators.length) {
         const creatorsList = document.createElement("ul");
         const creatorsTitle = document.createElement("h3");
@@ -125,27 +137,25 @@ function createModal(id) {
           creatorItem.innerText = `${creator.name}, ${creator.role}`;
           creatorsList.appendChild(creatorItem);
         });
-
         descriptions.appendChild(creatorsTitle);
         descriptions.appendChild(creatorsList);
-
-        cartButton.addEventListener("click", () => {
-          createCartItem(modalImg.src, modalTitle.innerText);
-          cartItemsCounter++;
-          updateCounter();
-        });
       }
-
-      descriptions.appendChild(cartButton);
     });
 }
 
-function createCartItem(img, title) {
+function createCartItem(img, title, id) {
   const itemContainer = document.createElement("div");
   const itemImg = document.createElement("img");
   const itemTitle = document.createElement("p");
   const removeButton = document.createElement("button");
   const removeButtonIcon = document.createElement("img");
+
+  const item = {
+    id: id,
+    title: title,
+  };
+
+  cartItemsKeeper.push(item);
 
   itemContainer.classList.add("cartItem");
   itemImg.classList.add("itemImg");
@@ -160,7 +170,9 @@ function createCartItem(img, title) {
   cartItemsContainer.appendChild(itemContainer);
 
   removeButton.addEventListener("click", () => {
+    cartItemsKeeper.splice(cartItemsKeeper.indexOf(item), 1)
     removeCartItem(itemContainer);
+    console.log(cartItemsKeeper);
   });
 }
 
@@ -212,23 +224,29 @@ openDeliveryButton.addEventListener("click", () => {
   deliveryStage.style.display = "flex";
 });
 
-let currentLocation = {}
+returnButton.addEventListener("click", () => {
+  ordersStage.style.display = "flex";
+  deliveryStage.style.display = "none";
+})
 
-var map = L.map('map').setView([-7.23718, -39.3222], 15)
+let currentLocation = {};
 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+var map = L.map("map").setView([-7.23718, -39.3222], 15);
+
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
-  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  attribution:
+    '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 }).addTo(map);
 
 var popup = L.popup();
 
 function onMapClick(e) {
-    popup
-        .setLatLng(e.latlng)
-        .setContent("You selected: " + e.latlng.toString())
-        .openOn(map);
-        currentLocation = e.latlng
+  popup
+    .setLatLng(e.latlng)
+    .setContent("You selected: " + e.latlng.toString())
+    .openOn(map);
+  currentLocation = e.latlng;
 }
 
-map.on('click', onMapClick);
+map.on("click", onMapClick);

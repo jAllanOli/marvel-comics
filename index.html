@@ -19,7 +19,7 @@
   </head>
   <body>
 
-    <nav>
+    <header class="logoArea">
       <span class="icon--svg icon--svg mvl-animated-logo" aria-hidden="true"
         ><svg width="130" height="52" xmlns="http://www.w3.org/2000/svg">
           <rect fill="#EC1D24" width="100%" height="100%"></rect>
@@ -34,7 +34,7 @@
           ></path>
         </svg>
       </span>
-    </nav>
+    </header>
 
     <main>
       <div class="searchArea">
@@ -57,14 +57,17 @@
                 </header>
                 <div class="cartItems"></div>
                 <footer>
-                    <button id="toDelivery">Prosseguir para entrega</button>
+                    <button id="toDelivery">Proceed to Delivery</button>
                 </footer>
             </div>
             <div class="addressPicking">
                 <h2>Delivery</h1>
                 <h3>Select your address on the map:</h3>
                 <div id="map"></div>
-                <button id="finishButton">Finish Order</button>
+                <div class="buttons">
+                  <button id="returnButton">Return</button>
+                  <button id="finishButton">Finish Order</button>
+                </div>
             </div>
         </div>
     </div>

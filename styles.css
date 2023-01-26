@@ -12,9 +12,10 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  padding-bottom: 1rem;
 }
 
-nav {
+.logoArea {
   padding: 3rem;
   width: 100%;
   background: linear-gradient(to top, transparent 0%, black 100%);
@@ -63,8 +64,8 @@ input {
 #searchButton:hover,
 .cardButton:hover,
 #toDelivery:hover,
-#minimizeButton:hover, #finishButton:hover {
-  box-shadow: 3px 2px 6px #000;
+#minimizeButton:hover, #finishButton:hover, #returnButton:hover {
+  box-shadow: 1px 1px 5px #424242;
   transition: all ease-in-out 500ms;
 }
 
@@ -327,7 +328,12 @@ main {
   width: 100%;
 }
 
-#finishButton {
+.buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+#finishButton, #returnButton {
   background-color: #ec1d24;
   padding: 1rem;
   border: none;
@@ -335,6 +341,7 @@ main {
   font-size: 1.2rem;
   border-radius: 5px;
   cursor: pointer;
+  width: 50%;
 }
 
 @keyframes fromTop {
