@@ -63,7 +63,7 @@ input {
 #searchButton:hover,
 .cardButton:hover,
 #toDelivery:hover,
-#minimizeButton:hover {
+#minimizeButton:hover, #finishButton:hover {
   box-shadow: 3px 2px 6px #000;
   transition: all ease-in-out 500ms;
 }
@@ -178,7 +178,7 @@ main {
 }
 
 .modalContent {
-    position: relative;
+  position: relative;
   background-color: #fefefe;
   margin: 15% auto;
   padding: 1.2rem;
@@ -315,7 +315,26 @@ main {
 }
 
 .addressPicking {
+  height: 100%;
   display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+#map {
+  height: 25rem;
+  width: 100%;
+}
+
+#finishButton {
+  background-color: #ec1d24;
+  padding: 1rem;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 @keyframes fromTop {

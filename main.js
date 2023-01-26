@@ -10,6 +10,9 @@ const cartModal = document.querySelector(".cartModal");
 const minimizeButton = document.querySelector("#minimizeButton");
 const cartItemsContainer = document.querySelector(".cartItems");
 const counterContainer = document.querySelector(".itemsCounter");
+const ordersStage = document.querySelector(".cartOrders");
+const deliveryStage = document.querySelector(".addressPicking");
+const openDeliveryButton = document.querySelector("#toDelivery");
 let cartItemsCounter = 0;
 
 function searchComics(title) {
@@ -87,19 +90,22 @@ function createModal(id) {
       const modalTitle = document.createElement("h1");
       const modalSeries = document.createElement("h2");
       const modalDescription = document.createElement("p");
-      const descriptions = document.createElement("div")
-      const modalImg = document.createElement("img")
+      const descriptions = document.createElement("div");
+      const modalImg = document.createElement("img");
       const cartButton = document.createElement("button");
       const cartIcon = document.createElement("img");
 
       cartButton.classList.add("detailsCardButton");
       modalContent.classList.add("modalContent");
       cartIcon.src = "./assets/cart-icon.svg";
-  cartButton.innerText = "Add to Cart";
+      cartButton.innerText = "Add to Cart";
       modalTitle.innerText = parsedResponse.data.results[0].title;
       modalSeries.innerText = parsedResponse.data.results[0].series.name;
       modalDescription.innerHTML = parsedResponse.data.results[0].description;
-      modalImg.src = parsedResponse.data.results[0].thumbnail.path + "." + parsedResponse.data.results[0].thumbnail.extension;
+      modalImg.src =
+        parsedResponse.data.results[0].thumbnail.path +
+        "." +
+        parsedResponse.data.results[0].thumbnail.extension;
 
       cartButton.appendChild(cartIcon);
       descriptions.appendChild(modalTitle);
@@ -124,10 +130,10 @@ function createModal(id) {
         descriptions.appendChild(creatorsList);
 
         cartButton.addEventListener("click", () => {
-            createCartItem(modalImg.src, modalTitle.innerText);
-            cartItemsCounter++;
-            updateCounter();
-          });
+          createCartItem(modalImg.src, modalTitle.innerText);
+          cartItemsCounter++;
+          updateCounter();
+        });
       }
 
       descriptions.appendChild(cartButton);
@@ -159,7 +165,7 @@ function createCartItem(img, title) {
 }
 
 function updateCounter() {
-    counterContainer.innerText = `${cartItemsCounter}`;
+  counterContainer.innerText = `${cartItemsCounter}`;
   if (cartItemsCounter) {
     counterContainer.style.display = "flex";
   } else if (!cartItemsCounter) {
@@ -170,7 +176,7 @@ function updateCounter() {
 function removeCartItem(item) {
   cartItemsContainer.removeChild(item);
   cartItemsCounter--;
-  updateCounter()
+  updateCounter();
 }
 
 searchButton.addEventListener("click", () => {
@@ -200,3 +206,29 @@ openCart.addEventListener("click", () => {
 minimizeButton.addEventListener("click", () => {
   cartModal.style.display = "none";
 });
+
+openDeliveryButton.addEventListener("click", () => {
+  ordersStage.style.display = "none";
+  deliveryStage.style.display = "flex";
+});
+
+let currentLocation = {}
+
+var map = L.map('map').setView([-7.23718, -39.3222], 15)
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+var popup = L.popup();
+
+function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent("You selected: " + e.latlng.toString())
+        .openOn(map);
+        currentLocation = e.latlng
+}
+
+map.on('click', onMapClick);
