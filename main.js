@@ -1,6 +1,7 @@
 const timeStamp = "1674644661201";
 const apiKey = "bdf62e3aeda733362c60b0533c4e934f";
 const md5 = "87b23df46123ab2e420d98d70c633a7b";
+
 const input = document.querySelector("#searchBox");
 const searchButton = document.querySelector("#searchButton");
 const mainContainer = document.querySelector("#comicsGrid");
@@ -16,6 +17,7 @@ const finalStage = document.querySelector(".finalArea");
 const openDeliveryButton = document.querySelector("#toDelivery");
 const returnButton = document.querySelector("#returnButton");
 const finishButton = document.querySelector("#finishButton");
+
 let cartItemsKeeper = [];
 
 function searchComics(title) {
