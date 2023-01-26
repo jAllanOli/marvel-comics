@@ -34,7 +34,10 @@ function searchComics(title) {
         createDivComic(srcImage, hqTitle, hqId, mainContainer);
       });
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      alert("Comic not found")
+      console.error(err)
+    });
 }
 
 function createDivComic(srcImage, title, id, destiny) {
@@ -195,6 +198,7 @@ function finishOrder() {
   cartModal.style.display = "none";
   ordersStage.style.display = "flex";
   finalStage.style.display = "none";
+  cartItemsContainer.innerHTML = "";
   cartItemsKeeper = [];
 }
 
