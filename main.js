@@ -12,8 +12,10 @@ const cartItemsContainer = document.querySelector(".cartItems");
 const counterContainer = document.querySelector(".itemsCounter");
 const ordersStage = document.querySelector(".cartOrders");
 const deliveryStage = document.querySelector(".addressPicking");
+const finalStage = document.querySelector(".finalArea");
 const openDeliveryButton = document.querySelector("#toDelivery");
-const returnButton = document.querySelector("#returnButton")
+const returnButton = document.querySelector("#returnButton");
+const finishButton = document.querySelector("#finishButton");
 let cartItemsCounter = 0;
 let cartItemsKeeper = [];
 
@@ -220,13 +222,27 @@ minimizeButton.addEventListener("click", () => {
 });
 
 openDeliveryButton.addEventListener("click", () => {
-  ordersStage.style.display = "none";
+  if(cartItemsCounter) {
+    ordersStage.style.display = "none";
   deliveryStage.style.display = "flex";
+  } else {
+    alert('Your cart is empty!')
+  }
 });
 
 returnButton.addEventListener("click", () => {
   ordersStage.style.display = "flex";
   deliveryStage.style.display = "none";
+})
+
+finishButton.addEventListener("click", () => {
+  deliveryStage.style.display = "none";
+  finalStage.style.display = "flex"
+  setTimeout(() => {
+    cartModal.style.display = "none";
+    ordersStage.style.display = "flex"
+    finalStage.style.display = "none";
+  }, 2000)
 })
 
 let currentLocation = {};
