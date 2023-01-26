@@ -34,8 +34,8 @@ function searchComics(title) {
       });
     })
     .catch((err) => {
-      alert("Comic not found")
-      console.error(err)
+      alert("Comic not found");
+      console.error(err);
     });
 }
 
@@ -124,6 +124,7 @@ function createModal(id) {
       cartButton.addEventListener("click", () => {
         createCartItem(modalImg.src, modalTitle.innerText, id);
         updateCounter();
+        updateButtonStatus();
       });
 
       descriptions.appendChild(cartButton);
@@ -174,7 +175,7 @@ function createCartItem(img, title, id) {
   removeButton.addEventListener("click", () => {
     cartItemsKeeper.splice(cartItemsKeeper.indexOf(item), 1);
     removeCartItem(itemContainer);
-    console.log(cartItemsKeeper);
+    updateButtonStatus();
   });
 }
 
@@ -192,13 +193,26 @@ function removeCartItem(item) {
   updateCounter();
 }
 
+function proceedToDelivery() {
+  ordersStage.style.display = "none";
+  deliveryStage.style.display = "flex";
+}
+
 function finishOrder() {
   cartModal.style.display = "none";
   ordersStage.style.display = "flex";
   finalStage.style.display = "none";
   cartItemsContainer.innerHTML = "";
   cartItemsKeeper = [];
-  updateCounter()
+  updateCounter();
+}
+
+function updateButtonStatus() {
+  if (!cartItemsKeeper.length) {
+    openDeliveryButton.disabled = true;
+  } else {
+    openDeliveryButton.disabled = false;
+  }
 }
 
 searchButton.addEventListener("click", () => {
@@ -223,6 +237,7 @@ window.onclick = function (event) {
 
 openCart.addEventListener("click", () => {
   cartModal.style.display = "block";
+  updateButtonStatus();
 });
 
 minimizeButton.addEventListener("click", () => {
@@ -230,12 +245,7 @@ minimizeButton.addEventListener("click", () => {
 });
 
 openDeliveryButton.addEventListener("click", () => {
-  if (cartItemsKeeper.length) {
-    ordersStage.style.display = "none";
-    deliveryStage.style.display = "flex";
-  } else {
-    alert("Your cart is empty!");
-  }
+  proceedToDelivery();
 });
 
 returnButton.addEventListener("click", () => {
