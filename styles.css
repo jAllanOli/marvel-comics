@@ -353,7 +353,7 @@ main {
   font-size: 3rem;
 }
 
-#toDelivery:disabled, #finishButton:disabled, #returnButton:disabled {
+#toDelivery:disabled, #finishButton:disabled {
   background-color: #7c7c7c;
 }
 

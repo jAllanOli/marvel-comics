@@ -124,7 +124,7 @@ function createModal(id) {
       cartButton.addEventListener("click", () => {
         createCartItem(modalImg.src, modalTitle.innerText, id);
         updateCounter();
-        updateButtonStatus();
+        updateProceedButtonStatus();
       });
 
       descriptions.appendChild(cartButton);
@@ -175,7 +175,7 @@ function createCartItem(img, title, id) {
   removeButton.addEventListener("click", () => {
     cartItemsKeeper.splice(cartItemsKeeper.indexOf(item), 1);
     removeCartItem(itemContainer);
-    updateButtonStatus();
+    updateProceedButtonStatus();
   });
 }
 
@@ -207,11 +207,19 @@ function finishOrder() {
   updateCounter();
 }
 
-function updateButtonStatus() {
+function updateProceedButtonStatus() {
   if (!cartItemsKeeper.length) {
     openDeliveryButton.disabled = true;
   } else {
     openDeliveryButton.disabled = false;
+  }
+}
+
+function updateFinishButtonStatus() {
+  if (!Object.keys(currentLocation).length) {
+    finishButton.disabled = true;
+  } else {
+    finishButton.disabled = false;
   }
 }
 
@@ -237,7 +245,7 @@ window.onclick = function (event) {
 
 openCart.addEventListener("click", () => {
   cartModal.style.display = "block";
-  updateButtonStatus();
+  updateProceedButtonStatus();
 });
 
 minimizeButton.addEventListener("click", () => {
@@ -246,6 +254,7 @@ minimizeButton.addEventListener("click", () => {
 
 openDeliveryButton.addEventListener("click", () => {
   proceedToDelivery();
+  updateFinishButtonStatus();
 });
 
 returnButton.addEventListener("click", () => {
@@ -254,13 +263,9 @@ returnButton.addEventListener("click", () => {
 });
 
 finishButton.addEventListener("click", () => {
-  if (Object.keys(currentLocation).length) {
-    deliveryStage.style.display = "none";
-    finalStage.style.display = "flex";
-    setTimeout(finishOrder, 2000);
-  } else {
-    alert("Select your location on the map!");
-  }
+  deliveryStage.style.display = "none";
+  finalStage.style.display = "flex";
+  setTimeout(finishOrder, 2000);
 });
 
 let currentLocation = {};
@@ -281,6 +286,7 @@ function onMapClick(e) {
     .setContent("You selected: " + e.latlng.toString())
     .openOn(map);
   currentLocation = e.latlng;
+  updateFinishButtonStatus();
 }
 
 map.on("click", onMapClick);
