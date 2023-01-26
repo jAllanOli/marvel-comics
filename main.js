@@ -198,6 +198,7 @@ function finishOrder() {
   finalStage.style.display = "none";
   cartItemsContainer.innerHTML = "";
   cartItemsKeeper = [];
+  updateCounter()
 }
 
 searchButton.addEventListener("click", () => {
