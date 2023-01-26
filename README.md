@@ -43,7 +43,7 @@ Users should be able to:
 
 ### Links
 
-- Live Site URL: [here](https://jallanoli.github.io/faq-accordion-card-main/)
+- Live Site URL: [here](https://jallanoli.github.io/marvel-comics/)
 
 ## My process
 
