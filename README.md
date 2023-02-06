@@ -43,7 +43,7 @@ Users should be able to:
 
 ### Links
 
-- Live Site URL: [here](https://jallanoli.github.io/marvel-comics/)
+- Live Site URL: [here](https://marvel-comics-two.vercel.app)
 
 ## My process
 
