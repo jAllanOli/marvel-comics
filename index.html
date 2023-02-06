@@ -39,9 +39,9 @@
     <main>
       <div class="searchArea">
       <input id="searchBox" type="text" placeholder="Search a comic">
-      <button id="searchButton">Search</button>
+      <button class="btn search-btn" id="searchButton">Search</button>
       </div>
-      <div id="comicsGrid"></div>
+      <div class="comicsGrid"></div>
     </main>
 
     <div class="comicModal"></div>
@@ -51,22 +51,22 @@
             <div class="cartOrders">
                 <header>
                     <h2>Cart</h1>
-                    <button id="minimizeButton">
+                    <button class="btn hide-btn" id="minimizeButton">
                         <img src="./assets/minimize-icon.svg" alt="minimize">
                     </button>
                 </header>
                 <div class="cartItems"></div>
                 <footer>
-                    <button id="toDelivery">Proceed to Delivery</button>
+                    <button class="btn proceed-btn" id="toDelivery">Proceed to Delivery</button>
                 </footer>
             </div>
             <div class="addressPicking">
                 <h2>Delivery</h1>
                 <h3>Select your address on the map:</h3>
-                <div id="map"></div>
-                <div class="buttons">
-                  <button id="returnButton">Return</button>
-                  <button id="finishButton">Finish Order</button>
+                <div class="map-container" id="map"></div>
+                <div class="btns-container">
+                  <button class="btn rtrn-btn" id="returnButton">Return</button>
+                  <button class="btn finish-btn" id="finishButton">Finish Order</button>
                 </div>
             </div>
             <div class="finalArea">

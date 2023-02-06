@@ -4,7 +4,7 @@ const md5 = "87b23df46123ab2e420d98d70c633a7b";
 
 const input = document.querySelector("#searchBox");
 const searchButton = document.querySelector("#searchButton");
-const mainContainer = document.querySelector("#comicsGrid");
+const mainContainer = document.querySelector(".comicsGrid");
 const detailsModal = document.querySelector(".comicModal");
 const openCart = document.querySelector("#openCart");
 const cartModal = document.querySelector(".cartModal");
@@ -53,7 +53,9 @@ function createDivComic(srcImage, title, id, destiny) {
 
   buttonsWrapper.classList.add("buttonsWrapper");
   cartButton.classList.add("cardButton");
+  cartButton.classList.add("btn");
   detailsButton.classList.add("cardButton");
+  detailsButton.classList.add("btn");
   divFather.classList.add("card");
   hqImg.classList.add("hqCover");
 
@@ -104,6 +106,7 @@ function createModal(id) {
       const cartIcon = document.createElement("img");
 
       cartButton.classList.add("detailsCardButton");
+      cartButton.classList.add("btn");
       modalContent.classList.add("modalContent");
       cartIcon.src = "./assets/cart-icon.svg";
       cartButton.innerText = "Add to Cart";
