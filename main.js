@@ -4,6 +4,8 @@ const md5 = "87b23df46123ab2e420d98d70c633a7b";
 
 const input = document.querySelector("#searchBox");
 const searchButton = document.querySelector("#searchButton");
+const nextButton = document.querySelector("#next");
+const previousButton = document.querySelector("#previous");
 const mainContainer = document.querySelector(".comicsGrid");
 const detailsModal = document.querySelector(".comicModal");
 const openCart = document.querySelector("#openCart");
@@ -17,28 +19,69 @@ const finalStage = document.querySelector(".finalArea");
 const openDeliveryButton = document.querySelector("#toDelivery");
 const returnButton = document.querySelector("#returnButton");
 const finishButton = document.querySelector("#finishButton");
+const homeButton = document.querySelector("#home-btn")
 
+let offsetCounter = 0;
 let cartItemsKeeper = [];
 
-function searchComics(title) {
-  fetch(
-    `https://gateway.marvel.com:443/v1/public/comics?titleStartsWith=${title}&ts=${timeStamp}&apikey=${apiKey}&hash=${md5}`
-  )
-    .then((response) => response.json())
-    .then((parsedResponse) => {
-      parsedResponse.data.results.forEach((element) => {
-        const hqId = element.id;
-        const srcImage =
-          element.thumbnail.path + "." + element.thumbnail.extension;
-        const hqTitle = element.title;
+function fetchComics(offset, title) {
 
-        createDivComic(srcImage, hqTitle, hqId, mainContainer);
+  if(title) {
+    fetch(
+      `https://gateway.marvel.com:443/v1/public/comics?titleStartsWith=${title}&offset=${offset}&ts=${timeStamp}&apikey=${apiKey}&hash=${md5}`
+    )
+      .then((response) => response.json())
+      .then((parsedResponse) => {
+        
+        if(parsedResponse.data.total && offsetCounter >= parsedResponse.data.total) {
+          alert('Already on the last page')
+          offsetCounter-=20
+          return
+        }
+
+        mainContainer.innerHTML = "";
+        parsedResponse.data.results.forEach((element) => {
+          const hqId = element.id;
+          const srcImage =
+            element.thumbnail.path + "." + element.thumbnail.extension;
+          const hqTitle = element.title;
+  
+          createDivComic(srcImage, hqTitle, hqId, mainContainer);
+          return
+        });
+
+        if(!parsedResponse.data.results.length) {
+          alert('No comic found')
+        }
+      })
+      .catch((err) => {
+        console.error(err);
       });
-    })
-    .catch((err) => {
-      alert("Comic not found");
-      console.error(err);
-    });
+  } else {
+    fetch(
+      `https://gateway.marvel.com:443/v1/public/comics?offset=${offset}&ts=${timeStamp}&apikey=${apiKey}&hash=${md5}`
+    )
+      .then((response) => response.json())
+      .then((parsedResponse) => {
+        if(!parsedResponse.data.results.length) {
+          alert('No more comics to show.')
+          return
+        }
+
+        mainContainer.innerHTML = "";
+        parsedResponse.data.results.forEach((element) => {
+          const hqId = element.id;
+          const srcImage =
+            element.thumbnail.path + "." + element.thumbnail.extension;
+          const hqTitle = element.title;
+  
+          createDivComic(srcImage, hqTitle, hqId, mainContainer);
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  } 
 }
 
 function createDivComic(srcImage, title, id, destiny) {
@@ -87,13 +130,11 @@ function createDivComic(srcImage, title, id, destiny) {
 }
 
 function createModal(id) {
-  console.log(id);
   fetch(
     `https://gateway.marvel.com:443/v1/public/comics/${id}?&ts=${timeStamp}&apikey=${apiKey}&hash=${md5}`
   )
     .then((response) => response.json())
     .then((parsedResponse) => {
-      console.log(parsedResponse);
       const creators = parsedResponse.data.results[0].creators.items;
 
       const modalContent = document.createElement("div");
@@ -228,17 +269,20 @@ function updateFinishButtonStatus() {
   }
 }
 
+function createNavigationArea() {}
+
 searchButton.addEventListener("click", () => {
-  mainContainer.innerHTML = "";
+  offsetCounter = 0;
   let inputContent = input.value;
-  searchComics(inputContent);
+  fetchComics(offsetCounter, inputContent);
 });
 
 input.addEventListener("keypress", (event) => {
   if (event.key === "Enter") {
+    offsetCounter = 0;
     mainContainer.innerHTML = "";
     let inputContent = input.value;
-    searchComics(inputContent);
+    fetchComics(offsetCounter, inputContent);
   }
 });
 
@@ -272,6 +316,32 @@ finishButton.addEventListener("click", () => {
   finalStage.style.display = "flex";
   setTimeout(finishOrder, 2000);
 });
+
+window.onload = fetchComics;
+
+nextButton.addEventListener("click", () => {
+  offsetCounter += 20;
+  if(input.value.length) {
+    fetchComics(offsetCounter, input.value);
+  } else {
+    fetchComics(offsetCounter);
+  }
+});
+
+previousButton.addEventListener("click", () => {
+  if(!offsetCounter) {
+      alert('Already on the first page')
+      return
+  }
+  offsetCounter -= 20;
+  if(input.value.length) {
+    fetchComics(offsetCounter, input.value);
+  } else {
+    fetchComics(offsetCounter);
+  }
+});
+
+homeButton.onclick = fetchComics()
 
 let currentLocation = {};
 

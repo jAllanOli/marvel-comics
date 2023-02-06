@@ -20,7 +20,7 @@
   <body>
 
     <header class="logoArea">
-      <span class="icon--svg icon--svg mvl-animated-logo" aria-hidden="true"
+      <span id="home-btn" class="icon--svg icon--svg mvl-animated-logo" aria-hidden="true"
         ><svg width="130" height="52" xmlns="http://www.w3.org/2000/svg">
           <rect fill="#EC1D24" width="100%" height="100%"></rect>
           <path
@@ -41,6 +41,10 @@
       <input id="searchBox" type="text" placeholder="Search a comic">
       <button class="btn search-btn" id="searchButton">Search</button>
       </div>
+      <nav class="buttons-wrapper">
+        <button class="btn nav-btn" id="previous">Previous Page</button>
+        <button class="btn nav-btn" id="next">Next Page</button>
+      </nav>
       <div class="comicsGrid"></div>
     </main>
 
