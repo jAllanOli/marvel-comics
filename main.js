@@ -27,7 +27,6 @@ let cartItemsKeeper = [];
 function fetchComics(offset, title) {
 
   if(title) {
-    console.log('executei1')
     fetch(
       `https://gateway.marvel.com:443/v1/public/comics?titleStartsWith=${title}&offset=${offset}&ts=${timeStamp}&apikey=${apiKey}&hash=${md5}`
     )
@@ -59,7 +58,6 @@ function fetchComics(offset, title) {
         console.error(err);
       });
   } else {
-    console.log('executei2')
     fetch(
       `https://gateway.marvel.com:443/v1/public/comics?offset=${offset}&ts=${timeStamp}&apikey=${apiKey}&hash=${md5}`
     )
