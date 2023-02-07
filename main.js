@@ -287,6 +287,7 @@ input.addEventListener("keypress", (event) => {
 window.onclick = function (event) {
   if (event.target == detailsModal) {
     detailsModal.style.display = "none";
+    detailsModal.innerHTML = "";
   }
 };
 
